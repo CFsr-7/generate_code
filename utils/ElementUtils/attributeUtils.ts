@@ -20,6 +20,21 @@ const _runAttribute = (_valueInfo:any) => {
     return attributes ? ` ${attributes}` : '';
 }
 
+/**
+ * 渲染 - 读取展示内容
+ * @param _value
+ * @param _content
+ */
+const _runInnerHT = (_value:any,_content:any) => {
+    // 此处属性为 any 避免兼容问题
+    return _value.context
+                ? _value.context
+                : !_value.field
+                    ? _content
+                    : _content[_value.field]
+}
+
 export {
+    _runInnerHT,
     _runAttribute
 }

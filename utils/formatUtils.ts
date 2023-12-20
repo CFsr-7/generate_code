@@ -9,6 +9,8 @@ const _HTML_ElementFormat = (htmlJson:string) => {
     return beautify.html(htmlJson, {
         // 缩进
         indent_size: 2,
+        // 最大出现行数
+        max_preserve_newlines:2,
         // 元素属性换行
         wrap_attributes: 'force',
     });

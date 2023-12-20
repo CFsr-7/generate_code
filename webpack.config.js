@@ -1,5 +1,7 @@
 
 const path = require("path");
+// del console
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     //代表webpack运行的模式，可选值有两个，development（开发模式）和production（发行模式,还可以对代码进行压缩）
@@ -29,4 +31,17 @@ module.exports = {
             ], // 使用可能需要安装一下 npm i path-browserify，先重启看报错不报错，报错在安装
         },
     },
+
+    // optimization: {
+    //     minimize: true,
+    //     minimizer: [
+    //         new TerserPlugin({
+    //             terserOptions: {
+    //                 compress: {
+    //                     drop_console: true, // 删除所有的 console 语句
+    //                 },
+    //             },
+    //         }),
+    //     ],
+    // },
 }

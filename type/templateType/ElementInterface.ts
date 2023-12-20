@@ -14,7 +14,20 @@ interface _ElementVideo extends _publicDom {
     controls?:boolean,
 }
 
+// video type
+interface _ElementAudio extends _publicDom {
+    src:string,
+    type:string,
+    muted?:boolean,
+    loop?:boolean,
+    preload?:string,
+    volume?:number,
+    autoplay?:boolean,
+    controls?:boolean,
+}
+
 export {
     _ElementD,
-    _ElementVideo
+    _ElementVideo,
+    _ElementAudio
 }

@@ -1,6 +1,7 @@
 import {
-    _DIV,
-    _VIDEO
+    _VIDEO,
+    _AUDIO,
+    _ELEMENT_VIEW,
 } from "../template/Element";
 
 import {
@@ -8,27 +9,21 @@ import {
     _ElementVideo,
 } from "../type/templateType/ElementInterface";
 
-import {
-    _CSS_Format,
-    _JS_LogicFormat,
-    _HTML_ElementFormat,
-} from "../utils/formatUtils";
-
 /*
 * 生成容器标签
 * generate div tags
 * */
 const _element_div = <T>(_value:_ElementD) => {
-    return _HTML_ElementFormat(`
+    return `
         ${
             _value.data.length ? _value.data.map((
                 _item:T,
                 _index:number
             ) => {
-                return _DIV(_value,_item,_index)
-            }).join('') : _DIV(_value,null,0)
+                return _ELEMENT_VIEW(_value,_item,_index)
+            }).join('') : _ELEMENT_VIEW(_value,null,0)
         }
-    `)
+    `
 }
 
 /*
@@ -39,7 +34,16 @@ const _element_video = (_value:_ElementVideo) => {
     return _VIDEO(_value);
 }
 
+/*
+* 生成视频标签
+* generate audio tags
+* */
+const _element_audio = (_value:_ElementVideo) => {
+    return _AUDIO(_value);
+}
+
 export {
     _element_div,
     _element_video,
+    _element_audio,
 }

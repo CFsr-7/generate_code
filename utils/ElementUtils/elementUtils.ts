@@ -1,6 +1,11 @@
 import {
+    _publicDom
+} from "../../type/templateType/Index";
+
+import {
     _elementKeys
-} from "../options/variable/elementV";
+} from "../../options/element/variable/elementV";
+
 
 /**
  * 返回对应元素标签
@@ -17,9 +22,11 @@ const _runElementView = (
 ) => {
     let keys = Object.keys(_Attributes);
     let attributeString = keys.map((key:string) => {
-        `${key}=${_Attributes[key]}`
+        return `${key}=${_Attributes[key]}`
     }).join(" ");
-    return `<${_type} ${attributeString}>${_content}</${_type}>`;
+    // 避免为空展示个空格
+    if(attributeString) attributeString = ` ${attributeString}`;
+    return `<${_type}${attributeString}>${_content}</${_type}>`;
 }
 
 /**

@@ -35,7 +35,6 @@ interface _publicDom {
     _sonAttributes?:{ [key: string]: string },
     // 当前展示数据是否被元素包裹
     isTrueContain?:boolean,
-
 }
 
 export {
