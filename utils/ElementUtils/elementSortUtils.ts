@@ -11,6 +11,7 @@ import
 from "../../code/ElementServer"
 
 /**
+ * create DomJson
  * 元素节点代码按照 Sort字段排序
  * Sort element node codes by Sort field
  * @param _list

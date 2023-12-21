@@ -7,22 +7,24 @@ interface _publicDom {
 
     /* 元素节点属性信息 */
     // 节点属性
-    id?:string,
-    class?:string,
-    style?:object | string,
+    attributes?:{ [key: string]: string }
+    // id?:string,
+    // class?:string,
+    // style?:object | string,
 
     /* 生成当前元素类型 */
     elementType:string,
+    // 无循环展示内容
+    context?:string,
 
     /* 当前循环内容信息 */
     // 字段类型
     fieldType:any,
     // 展示字段
     field?:string,
-    // 循环数据及和
+    // 循环数据集合
     data?:Array<any> | undefined | any,
-    // 无循环展示内容
-    context?:string,
+
 
     /* 子级循环内容信息 */
     // 子级循环数据(暂未支持)

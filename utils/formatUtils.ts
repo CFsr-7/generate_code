@@ -26,6 +26,8 @@ const _JS_LogicFormat = (jsJson:string) => {
     return beautify.js(jsJson, {
         // 缩进
         indent_size: 2,
+        // 最大出现行数
+        max_preserve_newlines:2,
     });
 }
 

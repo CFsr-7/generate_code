@@ -1,5 +1,11 @@
-import axios from 'axios';
-import {REQUEST_URL} from "./SUCCESS";
+import
+    axios
+from 'axios';
+
+import {
+    REQUEST_URL
+} from "./SUCCESS";
+
 class Request {
     /* send out new Axios request */
     request(opts) {

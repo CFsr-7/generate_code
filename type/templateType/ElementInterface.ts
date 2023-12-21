@@ -5,6 +5,12 @@ interface _ElementD extends _publicDom {
 
 }
 
+// a type
+interface _ElementA extends _publicDom {
+    src:string,
+    type:string,
+}
+
 // video type
 interface _ElementVideo extends _publicDom {
     src:string,
@@ -28,6 +34,7 @@ interface _ElementAudio extends _publicDom {
 
 export {
     _ElementD,
+    _ElementA,
     _ElementVideo,
     _ElementAudio
 }

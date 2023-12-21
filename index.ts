@@ -3,7 +3,7 @@ import {
 } from "./utils/ElementUtils/elementSortUtils";
 
 import {
-    _element_div,
+    _element_view,
     _element_video
 } from "./code/ElementServer"
 
@@ -13,14 +13,12 @@ import {
     _HTML_ElementFormat,
 } from "./utils/formatUtils";
 
-
-
 const CodeUtils = {
     // 元素排序
     _ElementSort,
 
     // 创建元素
-    _element_div,
+    _element_view,
     _element_video,
 
     // 元素格式化
