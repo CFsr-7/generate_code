@@ -56,12 +56,12 @@ const _isArrayFront = (
     _value:any
 ) => {
     // _value : 读取数组第一项并生成类型
-    _typeSonJson = `
+    _typeSonJson += `
         interface ${_name} {
             ${
                 _template(_specialTypeCheck(_value))
             }
-        }
+        }\n
     `
     return _name;
 }
