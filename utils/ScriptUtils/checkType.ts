@@ -1,33 +1,100 @@
-type ObjectValueTypes<T> = {
-    [K in keyof T]: T[K] extends object
-        ? T[K] extends any[]
-            ? T[K][number]
-            : ObjectValueTypes<T[K]>
-        : unknown;
+/*
+* 子类项类型
+* */
+let _typeSonJson = ``;
+
+/*
+*  类型特殊处理项
+* */
+const _fn_special_keys = {
+    "object Array":'',
+    "object Object":"_specialTypeCheck",
 };
 
-function getObjectValueTypes<T>(obj: T): ObjectValueTypes<T> {
-    const result: any = {};
+/**
+ * 检测数据类型
+ * @param _value
+ */
+const _typePrototype = (_value:any) => {
+    return Object.prototype.toString.call(_value).slice(1,-1);
+}
 
-    for (const key in obj) {
-        // @ts-ignore
-        if (obj.hasOwnProperty(key)) {
-            const value = obj[key];
+/*
+* 数组类型检测
+* */
+const _isArrayOfType = (arr:any, type:string) => {
+    return Array.isArray(arr) && arr.every(item => typeof item === type);
+}
 
-            if (Array.isArray(value)) {
-                let contextType = value.length > 0 && value[0] ? `${typeof value[0]}[]` : `any[]`
-                console.log(contextType)
-                result[key] = contextType
-            } else if (typeof value === 'object' && value !== null) {
-                result[key] = getObjectValueTypes(value);
-            } else {
-                result[key] = typeof value;
+/*
+* 对象类型转模板
+* */
+// @ts-ignore
+const _template = (_value:any) => {
+    return `
+        ${
+            Object.keys(_value).map((key:string) => {
+                if(
+                    _typePrototype(_value[key]) === "object Object"
+                ) {
+                    return `${key}:{${_template(_value[key])}},\n`
+                }else {
+                    return `${key}:${_value[key]},\n` 
+                }
+            }).join(" ")
+        }
+    `
+}
+
+/**
+ * 数组类型深层转换
+ * @param _name
+ * @param _value
+ */
+const _isArrayFront = (
+    _name:string,
+    _value:any
+) => {
+    // _value : 读取数组第一项并生成类型
+    _typeSonJson = `
+        interface ${_name} {
+            ${
+                _template(_specialTypeCheck(_value))
             }
         }
-    }
+    `
+    return _name;
+}
 
-    // @ts-ignore
-    return JSON.stringify(result);
+/**
+ * 特殊参数类型转换
+ * change Object Array types
+ * @param _value
+ */
+const _specialTypeCheck : Function = (_value:any) => {
+    let result : any = {};
+    for (const _valueKey in _value) {
+        if(
+            _typePrototype(_value[_valueKey]) === 'object Object'
+        ){
+            result[_valueKey] = _specialTypeCheck(_value[_valueKey])
+        }else if(
+            _typePrototype(_value[_valueKey]) === 'object Array'
+        ){
+            let _arr = _value[_valueKey];
+            result[_valueKey] =
+                _isArrayOfType(_arr,'string') ? `string[]`
+                    : _isArrayOfType(_arr,'number') ? `number[]`
+                        : _isArrayOfType(_arr,'object')
+                            ? _isArrayFront(
+                                _valueKey + 'Type',
+                                _value[_valueKey][0]
+                            ) : `any[]`
+        }else {
+            result[_valueKey] = typeof _value[_valueKey];
+        }
+    }
+    return result;
 }
 
 /**
@@ -40,20 +107,21 @@ const _checkTsType = (
     _name:string,
     _value:{[key:string]:any} | any,
 ) => {
-    // 待处理对象和数组类型
-    // 1. 写个方法 递归处理类型并返回 `` 串
-    let keys : string[] = Object.keys(_value);
-    return `
+    let json = `
         interface ${_name} {
             ${
-                keys.map((key:string,index:number) => {
-                    return `${key}:${typeof _value[key]},\n`
-                }).join(" ")
+                _template(_specialTypeCheck(_value))
             }
         }
+    `
+    return `
+        <script setup lang="ts">
+            ${_typeSonJson}\n
+            ${json}
+        </script>
     `
 }
 
 export {
-    getObjectValueTypes
+    _checkTsType,
 }

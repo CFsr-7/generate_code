@@ -27,7 +27,7 @@ const _JS_LogicFormat = (jsJson:string) => {
         // 缩进
         indent_size: 2,
         // 最大出现行数
-        max_preserve_newlines:2,
+        max_preserve_newlines:1,
     });
 }
 

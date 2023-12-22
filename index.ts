@@ -1,8 +1,4 @@
 import {
-    _ElementSort
-} from "./utils/ElementUtils/elementSortUtils";
-
-import {
     _element_view,
     _element_video
 } from "./code/ElementServer"
@@ -13,8 +9,19 @@ import {
     _HTML_ElementFormat,
 } from "./utils/formatUtils";
 
+import {
+    _checkTsType
+} from "./utils/ScriptUtils/checkType";
+
+import {
+    _ElementSort
+} from "./utils/ElementUtils/elementSortUtils";
+
 
 const CodeUtils = {
+    // 自动转换类型
+    _checkTsType,
+
     // 元素排序
     _ElementSort,
 
